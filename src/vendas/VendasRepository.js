@@ -16,36 +16,39 @@ import {
 
 export function inserirVenda(clienteId, produtoId, quantidade, precoUnit) {
     try {
-        const runTransaction = database.transaction(() => {
-            const produto = buscarProdutoPorId(produtoId);
+        database.exec('BEGIN TRANSACTION;');
+        const produto = buscarProdutoPorId(produtoId);
 
-            if (!produto) {
-                throw new Error(`Produto com ID ${produtoId} não encontrado.`);
-            }
-            if (produto.estoque < quantidade) {
-                throw new Error(`Estoque insuficiente para o produto "${produto.nome}". Disponível: ${produto.estoque}, Solicitado: ${quantidade}.`);
-            }
+        if (!produto) {
+            database.exec('ROLLBACK;');
+            throw new Error(`Produto com ID ${produtoId} não encontrado.`);
+        }
+        if (produto.estoque < quantidade) {
+            database.exec('ROLLBACK;');
+            throw new Error(`Estoque insuficiente para o produto "${produto.nome}". Disponível: ${produto.estoque}, Solicitado: ${quantidade}.`);
+        }
 
-            const stmtVenda = database.prepare(queryInserirVenda);
-            const resultVenda = stmtVenda.run(clienteId, produtoId, quantidade, precoUnit);
-            const vendaId = resultVenda.lastInsertRowid;
+        const stmtVenda = database.prepare(queryInserirVenda);
+        const resultVenda = stmtVenda.run(clienteId, produtoId, quantidade, precoUnit);
+        const vendaId = resultVenda.lastInsertRowid;
 
-            if (!vendaId) {
-                throw new Error('Falha ao registrar a venda.');
-            }
+        if (!vendaId) {
+            database.exec('ROLLBACK;');
+            throw new Error('Falha ao registrar a venda.');
+        }
 
-            const estoqueAtualizado = subtrairEstoqueProduto(produtoId, quantidade);
-            if (!estoqueAtualizado) {
-                throw new Error(`Falha ao subtrair estoque do produto ID ${produtoId}.`);
-            }
+        const estoqueAtualizado = subtrairEstoqueProduto(produtoId, quantidade);
+        if (!estoqueAtualizado) {
+            database.exec('ROLLBACK;');
+            throw new Error(`Falha ao subtrair estoque do produto ID ${produtoId}.`);
+        }
 
-            console.log(`Venda registrada com ID: ${vendaId} e estoque do produto ID ${produtoId} atualizado.`);
-            return vendaId;
-        });
-
-        return runTransaction();
+        database.exec('COMMIT;');
+        console.log(`Venda registrada com ID: ${vendaId} e estoque do produto ID ${produtoId} atualizado.`);
+        return vendaId;
 
     } catch (error) {
+        database.exec('ROLLBACK;');
         console.error(`Erro ao realizar venda:`, error.message);
         throw error;
     }
