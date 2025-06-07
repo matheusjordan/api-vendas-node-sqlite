@@ -8,7 +8,8 @@
     "start:dev": "nodemon --watch --experimental-sqlite src/index.js",
     "seed:clientes": "node ./tests/criarClientes.js",
     "seed:produtos": "node ./tests/criarProdutos.js",
-    "seed:vendas": "node ./tests/criarVendas.js"
+    "seed:vendas": "node ./tests/criarVendas.js",
+    "seed:reset": "node --experimental-sqlite ./tests/resetarBanco.js"
   },
   "keywords": [],
   "author": "Matheus Jordan",
