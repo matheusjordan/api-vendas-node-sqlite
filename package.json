@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --experimental-sqlite src/index.js",
     "start:dev": "nodemon --watch --experimental-sqlite src/index.js",
-    "seed:clientes": "node ./tests/criarClientes.js"
+    "seed:clientes": "node ./tests/criarClientes.js",
+    "seed:produtos": "node ./tests/criarProdutos.js"
   },
   "keywords": [],
   "author": "Matheus Jordan",
