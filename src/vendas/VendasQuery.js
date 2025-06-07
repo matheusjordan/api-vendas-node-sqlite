@@ -1,5 +1,3 @@
-// VendasQuery.js
-
 export const queryCriarTabelaVendas = `
 CREATE TABLE IF NOT EXISTS Venda (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,

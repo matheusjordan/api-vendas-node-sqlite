@@ -6,6 +6,7 @@ import {
     queryBuscarProdutoPorId,
     queryBuscarProdutoPorNome,
     queryAtualizarProduto,
+    queryAtualizarEstoqueProduto,
     queryDeletarProduto
 } from './ProdutosQuery.js';
 
@@ -65,6 +66,16 @@ export function atualizarProduto(id, novoNome, novoPreco, novoEstoque) {
     } catch (error) {
         console.error(`Erro ao atualizar produto ID ${id}:`, error.message);
         return false;
+    }
+}
+
+export function subtrairEstoqueProduto(id, quantidade) { // Nova função
+    try {
+        const stmt = database.prepare(queryAtualizarEstoqueProduto);
+        const result = stmt.run(quantidade, id);
+        return result.changes > 0;
+    } catch (error) {
+        throw error;
     }
 }
 

@@ -27,6 +27,10 @@ export const queryAtualizarProduto = `
 UPDATE Produtos SET nome = ?, preco = ?, estoque = ? WHERE id = ?;
 `;
 
+export const queryAtualizarEstoqueProduto = `
+UPDATE Produtos SET estoque = estoque - ? WHERE id = ?;
+`;
+
 export const queryDeletarProduto = `
 DELETE FROM Produtos WHERE id = ?;
 `;

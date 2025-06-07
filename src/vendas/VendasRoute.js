@@ -75,13 +75,18 @@ vendasRoute.post('/', (req, res) => {
         }
 
         const newId = inserirVenda(cliente_id, produto_id, quantidade, preco_unit);
-        if (newId) {
-            res.status(201).json({ id: newId, cliente_id, produto_id, quantidade, preco_unit });
-        } else {
-            res.status(500).json({ message: 'Falha ao inserir a venda.' });
-        }
+        res.status(201).json({ id: newId, cliente_id, produto_id, quantidade, preco_unit });
+
     } catch (error) {
-        console.error('Erro ao criar venda:', error);
+        console.error('Erro ao criar venda:', error.message);
+
+        if (error.message.includes('Estoque insuficiente')) {
+            return res.status(400).json({ message: error.message });
+        }
+        if (error.message.includes('Produto com ID') && error.message.includes('não encontrado')) {
+            return res.status(404).json({ message: error.message });
+        }
+
         res.status(500).json({ message: 'Erro interno do servidor ao criar venda.' });
     }
 });

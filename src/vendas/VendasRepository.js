@@ -8,15 +8,46 @@ import {
     queryDeletarVenda
 } from './VendasQuery.js';
 
+import {
+    buscarProdutoPorId,
+    subtrairEstoqueProduto
+} from '../produtos/ProdutosRepository.js';
+
+
 export function inserirVenda(clienteId, produtoId, quantidade, precoUnit) {
     try {
-        const stmt = database.prepare(queryInserirVenda);
-        const result = stmt.run(clienteId, produtoId, quantidade, precoUnit);
-        console.log(`Venda registrada com ID: ${result.lastInsertRowid}`);
-        return result.lastInsertRowid;
+        const runTransaction = database.transaction(() => {
+            const produto = buscarProdutoPorId(produtoId);
+
+            if (!produto) {
+                throw new Error(`Produto com ID ${produtoId} não encontrado.`);
+            }
+            if (produto.estoque < quantidade) {
+                throw new Error(`Estoque insuficiente para o produto "${produto.nome}". Disponível: ${produto.estoque}, Solicitado: ${quantidade}.`);
+            }
+
+            const stmtVenda = database.prepare(queryInserirVenda);
+            const resultVenda = stmtVenda.run(clienteId, produtoId, quantidade, precoUnit);
+            const vendaId = resultVenda.lastInsertRowid;
+
+            if (!vendaId) {
+                throw new Error('Falha ao registrar a venda.');
+            }
+
+            const estoqueAtualizado = subtrairEstoqueProduto(produtoId, quantidade);
+            if (!estoqueAtualizado) {
+                throw new Error(`Falha ao subtrair estoque do produto ID ${produtoId}.`);
+            }
+
+            console.log(`Venda registrada com ID: ${vendaId} e estoque do produto ID ${produtoId} atualizado.`);
+            return vendaId;
+        });
+
+        return runTransaction();
+
     } catch (error) {
-        console.error(`Erro ao inserir venda:`, error.message);
-        return null;
+        console.error(`Erro ao realizar venda:`, error.message);
+        throw error;
     }
 }
 
