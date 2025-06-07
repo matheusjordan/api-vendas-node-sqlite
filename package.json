@@ -12,6 +12,7 @@
   "description": "Substitutiva da Disciplina",
   "dependencies": {
     "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "swagger-ui-express": "^5.0.1"
   }
 }
