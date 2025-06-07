@@ -2,11 +2,16 @@
   "name": "mj-web-store",
   "version": "0",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "start:dev": "node src/index.js"
+    "start:dev": "nodemon --watch src/index.js"
   },
   "keywords": [],
   "author": "Matheus Jordan",
   "license": "ISC",
-  "description": "Substitutiva da Disciplina"
+  "description": "Substitutiva da Disciplina",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
 }
