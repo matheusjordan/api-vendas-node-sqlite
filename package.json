@@ -1,0 +1,12 @@
+{
+  "name": "mj-web-store",
+  "version": "0",
+  "main": "src/index.js",
+  "scripts": {
+    "start:dev": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Matheus Jordan",
+  "license": "ISC",
+  "description": "Substitutiva da Disciplina"
+}
