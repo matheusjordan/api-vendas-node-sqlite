@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start:dev": "nodemon --watch src/index.js"
+    "start:dev": "nodemon --watch --experimental-sqlite src/index.js"
   },
   "keywords": [],
   "author": "Matheus Jordan",
