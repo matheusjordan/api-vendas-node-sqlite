@@ -30,7 +30,7 @@ As principais dependências do projeto são:
 | Dependência        | Versão    | Descrição                                         |
 | :----------------- | :-------- | :------------------------------------------------ |
 | `express`          | `^5.1.0`  | **Framework web** para Node.js.                       |
-| `nodemon`          | `^3.1.10` | Utilitário para **desenvolvimento** (reinicia o server).|
+| `nodemon`          | `^3.1.10` | Utilitário para **desenvolvimento** (reinicia o server a cada alteração).|
 | `swagger-ui-express`| `^5.0.1`  | Serve a **interface do Swagger UI**.                 |
 
 **Nota**: O banco de dados **`node:sqlite`** é um módulo nativo experimental do Node.js (v24.1.0+), **não exigindo instalação via `npm`**.
@@ -40,7 +40,7 @@ As principais dependências do projeto são:
 ## 🚀 Como Rodar
 
 1.  **Instale as dependências**: Use o comando `npm install` no terminal.
-2.  **Execute o servidor**: Utilize o comando `node --experimental-sqlite src/index.js`.
+2.  **Execute o servidor**: Utilize o comando `npm start`.
 3.  **Acesse a documentação**: Abra seu navegador e vá para `http://localhost:3000/api-docs`.
 
 ---
