@@ -1,4 +1,4 @@
-import database from '../src/Database.js';
+import database from '../src/database.js';
 
 function resetarTabela(nomeTabela) {
     try {
@@ -10,11 +10,19 @@ function resetarTabela(nomeTabela) {
     }
 }
 
+function excluirTabela(nomeTabela) {
+    try {
+        const query = `DROP TABLE ${nomeTabela};`;
+        const result = database.exec(query);
+        console.log(`Tabela '${nomeTabela}' excluída.`);
+    } catch (error) {
+        console.error(`Erro ao excluir a tabela '${nomeTabela}': ${error.message}`);
+    }
+}
+
 function resetarTabelasSequencia() {
     console.log("Iniciando o reset do banco de dados...");
-    resetarTabela('Venda');
-    resetarTabela('Produtos');
-    resetarTabela('Clientes');
+    ['Venda', 'Produtos', 'Clientes'].forEach(t => excluirTabela(t))
     console.log("Reset do banco de dados concluído.");
 }
 

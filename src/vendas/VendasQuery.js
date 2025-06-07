@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS Venda (
     cliente_id      INTEGER NOT NULL,
     produto_id      INTEGER NOT NULL,
     quantidade      INTEGER NOT NULL CHECK(quantidade > 0),
-    preco_unit      REAL NOT NULL CHECK(preco_unit > 0),
     data_venda      TEXT DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%S', 'now')) NOT NULL,
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id),
     FOREIGN KEY (produto_id) REFERENCES Produtos(id)

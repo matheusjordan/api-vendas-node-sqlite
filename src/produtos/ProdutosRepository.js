@@ -1,4 +1,4 @@
-import database from '../Database.js';
+import database from '../database.js';
 
 import {
     queryInserirProduto,
