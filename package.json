@@ -9,7 +9,8 @@
     "seed:clientes": "node ./tests/criarClientes.js",
     "seed:produtos": "node ./tests/criarProdutos.js",
     "seed:vendas": "node ./tests/criarVendas.js",
-    "seed:reset": "node --experimental-sqlite ./tests/resetarBanco.js"
+    "seed:reset": "node --experimental-sqlite ./tests/resetarBanco.js",
+    "FIATLUX": "npm run seed:clientes && read -p \"\nPressione Enter para continuar...\" && npm run seed:produtos && read -p \"\nPressione Enter...\" && npm run seed:vendas && read -p \"\nPressione Enter...\""
   },
   "keywords": [],
   "author": "Matheus Jordan",
