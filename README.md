@@ -51,7 +51,7 @@ As principais dependências do projeto são:
 
 1.  **Instale as dependências**: Use o comando `npm install` no terminal.
 2.  **Execute o servidor**: Utilize o comando `npm start`.
-3.  **Acesse a documentação**: Abra seu navegador e vá para `http://localhost:3000/api-docs`.
+3.  **Acesse a documentação**: Abra seu navegador e vá para `http://localhost:3000/docs`.
 
 ---
 
