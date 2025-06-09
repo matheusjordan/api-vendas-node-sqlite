@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Venda (
 `;
 
 export const queryInserirVenda = `
-INSERT INTO Venda (cliente_id, produto_id, quantidade, preco_unit) VALUES (?, ?, ?, ?);
+INSERT INTO Venda (cliente_id, produto_id, quantidade) VALUES (?, ?, ?);
 `;
 
 export const queryBuscarTodasVendas = `
@@ -22,8 +22,6 @@ SELECT
     V.produto_id,
     P.nome AS produto_nome,
     V.quantidade,
-    V.preco_unit,
-    (V.quantidade * V.preco_unit) AS subtotal,
     V.data_venda
 FROM Venda AS V
 JOIN Clientes AS C ON V.cliente_id = C.id
@@ -38,8 +36,6 @@ SELECT
     V.produto_id,
     P.nome AS produto_nome,
     V.quantidade,
-    V.preco_unit,
-    (V.quantidade * V.preco_unit) AS subtotal,
     V.data_venda
 FROM Venda AS V
 JOIN Clientes AS C ON V.cliente_id = C.id
@@ -55,8 +51,6 @@ SELECT
     V.produto_id,
     P.nome AS produto_nome,
     V.quantidade,
-    V.preco_unit,
-    (V.quantidade * V.preco_unit) AS subtotal,
     V.data_venda
 FROM Venda AS V
 JOIN Clientes AS C ON V.cliente_id = C.id

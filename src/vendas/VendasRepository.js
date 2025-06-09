@@ -13,44 +13,39 @@ import {
     subtrairEstoqueProduto
 } from '../produtos/ProdutosRepository.js';
 
+import MESSAGES from '../consts.js';
 
-export function inserirVenda(clienteId, produtoId, quantidade, precoUnit) {
+export function inserirVenda(clienteId, produtoId, quantidade) {
     try {
         database.exec('BEGIN TRANSACTION;');
+        
         const produto = buscarProdutoPorId(produtoId);
-
         if (!produto) {
-            database.exec('ROLLBACK;');
-            throw new Error(`Produto com ID ${produtoId} não encontrado.`);
+            throw new Error(MESSAGES.PRODUTO_NAO_ENCONTRADO);
         }
         if (produto.estoque < quantidade) {
-            database.exec('ROLLBACK;');
-            throw new Error(`Estoque insuficiente para o produto "${produto.nome}". Disponível: ${produto.estoque}, Solicitado: ${quantidade}.`);
-        }
-
-        const stmtVenda = database.prepare(queryInserirVenda);
-        const resultVenda = stmtVenda.run(clienteId, produtoId, quantidade, precoUnit);
-        const vendaId = resultVenda.lastInsertRowid;
-
-        if (!vendaId) {
-            database.exec('ROLLBACK;');
-            throw new Error('Falha ao registrar a venda.');
+            throw new Error(MESSAGES.ESTOQUE_INSUFICIENTE_PARA_O_PRODUTO);
         }
 
         const estoqueAtualizado = subtrairEstoqueProduto(produtoId, quantidade);
         if (!estoqueAtualizado) {
-            database.exec('ROLLBACK;');
-            throw new Error(`Falha ao subtrair estoque do produto ID ${produtoId}.`);
+            throw new Error(MESSAGES.FALHA_AO_SUBTRAIR_ESTOQUE_DO_PRODUTO);
+        }
+
+        const stmtVenda = database.prepare(queryInserirVenda);
+        const resultVenda = stmtVenda.run(clienteId, produtoId, quantidade);
+        const vendaId = resultVenda.lastInsertRowid;
+
+        if (!vendaId) {
+            throw new Error(MESSAGES.FALHA_AO_REGISTRAR_VENDA);
         }
 
         database.exec('COMMIT;');
-        console.log(`Venda registrada com ID: ${vendaId} e estoque do produto ID ${produtoId} atualizado.`);
         return vendaId;
 
     } catch (error) {
         database.exec('ROLLBACK;');
-        console.error(`Erro ao realizar venda:`, error.message);
-        throw error;
+        throw new Error(error);
     }
 }
 
@@ -59,8 +54,7 @@ export function buscarTodasVendas() {
         const vendas = database.prepare(queryBuscarTodasVendas).all();
         return vendas;
     } catch (error) {
-        console.error('Erro ao buscar todas as vendas:', error.message);
-        return [];
+        throw new Error(MESSAGES.FALHA_AO_BUSCAR_VENDAS);
     }
 }
 
@@ -69,8 +63,7 @@ export function buscarVendaPorId(id) {
         const venda = database.prepare(queryBuscarVendaPorId).get(id);
         return venda;
     } catch (error) {
-        console.error(`Erro ao buscar venda por ID ${id}:`, error.message);
-        return null;
+        throw new Error(MESSAGES.FALHA_AO_BUSCAR_VENDA_POR_ID);
     }
 }
 
@@ -79,8 +72,7 @@ export function buscarVendasPorClienteId(clienteId) {
         const vendas = database.prepare(queryBuscarVendasPorClienteId).all(clienteId);
         return vendas;
     } catch (error) {
-        console.error(`Erro ao buscar vendas por Cliente ID ${clienteId}:`, error.message);
-        return [];
+        throw new Error(MESSAGES.FALHA_AO_BUSCAR_VENDAS_POR_CLIENTE_ID);
     }
 }
 
@@ -89,14 +81,11 @@ export function deletarVenda(id) {
         const stmt = database.prepare(queryDeletarVenda);
         const result = stmt.run(id);
         if (result.changes > 0) {
-            console.log(`Venda ID ${id} deletada com sucesso.`);
             return true;
         } else {
-            console.log(`Nenhuma venda encontrada com ID ${id} para deletar.`);
             return false;
         }
     } catch (error) {
-        console.error(`Erro ao deletar venda ID ${id}:`, error.message);
-        return false;
+        throw new Error(MESSAGES.FALHA_AO_DELETAR_VENDA);
     }
 }

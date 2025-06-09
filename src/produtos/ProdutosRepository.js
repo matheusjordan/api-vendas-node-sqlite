@@ -63,12 +63,13 @@ export function atualizarProduto(id, novoNome, novoPreco, novoEstoque) {
     }
 }
 
-export function subtrairEstoqueProduto(id, quantidade) { // Nova função
+export function subtrairEstoqueProduto(id, quantidade) {
     try {
         const stmt = database.prepare(queryAtualizarEstoqueProduto);
         const result = stmt.run(quantidade, id);
         return result.changes > 0;
     } catch (error) {
+        console.log(error)
         throw new Error(MESSAGES.FALHA_AO_ATUALIZAR_PRODUTO);
     }
 }

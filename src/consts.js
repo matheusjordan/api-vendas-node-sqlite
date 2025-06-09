@@ -23,13 +23,23 @@ const MESSAGES = {
     NOME_DEVE_SER_UMA_STRING_NAO_VAZIA: 'Nome deve ser uma string não vazia.',
     PRECO_DEVE_SER_UM_NUMERO_MAIOR_QUE_ZERO: 'Preço deve ser um número maior que zero.',
     ESTOQUE_DEVE_SER_UM_NUMERO_INTEIRO_NAO_NEGATIVO: 'Estoque deve ser um número inteiro não negativo.',
-
+    ESTOQUE_INSUFICIENTE_PARA_O_PRODUTO: 'Estoque insuficiente para o produto.',
+    FALHA_AO_SUBTRAIR_ESTOQUE_DO_PRODUTO: 'Falha ao subtrair estoque do produto.',
+    PRECO_UNITARIO_DEVE_SER_UM_NUMERO_MAIOR_QUE_ZERO: 'Preço unitário deve ser um número maior que zero.',
+    CLIENTE_ID_PRODUTO_ID_QUANTIDADE_E_PRECO_UNITARIO_SAO_OBRIGATORIOS: 'Cliente ID, Produto ID, Quantidade e Preço Unitário são obrigatórios.',
+    CLIENTE_ID_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO: 'Cliente ID deve ser um número inteiro positivo.',
+    PRODUTO_ID_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO: 'Produto ID deve ser um número inteiro positivo.',
+    QUANTIDADE_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO: 'Quantidade deve ser um número inteiro positivo.',
     FALHA_AO_INSERIR_VENDA: 'Falha ao inserir a venda.',
     FALHA_AO_LISTAR_VENDAS: 'Falha ao listar vendas.',
     FALHA_AO_BUSCAR_VENDA: 'Falha ao buscar a venda.',
     VENDA_ATUALIZADA_COM_SUCESSO: 'Venda atualizada com sucesso.',
     FALHA_AO_ATUALIZAR_VENDA: 'Falha ao atualizar a venda.',
-    FALHA_AO_DELETAR_VENDA: 'Falha ao deletar a venda.'
+    FALHA_AO_DELETAR_VENDA: 'Falha ao deletar a venda.',
+    FALHA_AO_REGISTRAR_VENDA: 'Falha ao registrar a venda.',
+    FALHA_AO_BUSCAR_VENDAS: 'Falha ao buscar vendas.',
+    FALHA_AO_BUSCAR_VENDA_POR_ID: 'Falha ao buscar a venda por ID.',
+    FALHA_AO_BUSCAR_VENDAS_POR_CLIENTE_ID: 'Falha ao buscar vendas por Cliente ID.',
 }
 
 export default MESSAGES;

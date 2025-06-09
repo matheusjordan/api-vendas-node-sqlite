@@ -18,7 +18,7 @@ async function fetchData(endpoint) {
     }
 }
 
-async function criarVenda(clienteId, produtoId, quantidade, precoUnit) {
+async function criarVenda(clienteId, produtoId, quantidade) {
     const url = `${BASE_URL}/vendas`;
     const headers = {
         "Content-Type": "application/json"
@@ -26,8 +26,7 @@ async function criarVenda(clienteId, produtoId, quantidade, precoUnit) {
     const payload = {
         cliente_id: clienteId,
         produto_id: produtoId,
-        quantidade: quantidade,
-        preco_unit: precoUnit
+        quantidade: quantidade
     };
 
     try {
@@ -85,20 +84,18 @@ async function main() {
         const produtoAleatorio = produtos[Math.floor(Math.random() * produtos.length)];
 
         // 3. Randomizar a quantidade entre 1 e 10
-        const quantidadeAleatoria = Math.floor(Math.random() * 10) + 1;
+        const quantidadeAleatoria = Math.floor(Math.random() * 3) + 1;
 
         console.log(`\n--- Tentativa de Venda ${i + 1}/${numVendasParaGerar} ---`);
         console.log(`  Cliente: ${clienteAleatorio.nome} (ID: ${clienteAleatorio.id})`);
         console.log(`  Produto: ${produtoAleatorio.nome} (ID: ${produtoAleatorio.id}) - Estoque atual: ${produtoAleatorio.estoque}`);
         console.log(`  Quantidade solicitada: ${quantidadeAleatoria}`);
-        console.log(`  Preço unitário: ${produtoAleatorio.preco}`);
 
         // 4. Criar a venda
         await criarVenda(
             clienteAleatorio.id,
             produtoAleatorio.id,
-            quantidadeAleatoria,
-            produtoAleatorio.preco
+            quantidadeAleatoria
         );
 
         // Pequeno atraso para não sobrecarregar a API ou o console (opcional)

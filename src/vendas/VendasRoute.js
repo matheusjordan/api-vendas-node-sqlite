@@ -8,15 +8,30 @@ import {
     deletarVenda
 } from './VendasRepository.js';
 
+import MESSAGES from '../consts.js';
+
 const vendasRoute = express.Router();
+
+vendasRoute.get('/cliente/:clienteId', (req, res) => {
+    try {
+        const clienteId = parseInt(req.params.clienteId);
+        if (isNaN(clienteId)) {
+            return res.status(400).json({ message: MESSAGES.ID_INVALIDO_DEVE_SER_NUMERO });
+        }
+
+        const vendas = buscarVendasPorClienteId(clienteId);
+        res.status(200).json(vendas);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 vendasRoute.get('/', (req, res) => {
     try {
         const vendas = buscarTodasVendas();
         res.status(200).json(vendas);
     } catch (error) {
-        console.error('Erro ao listar vendas:', error);
-        res.status(500).json({ message: 'Erro interno do servidor ao listar vendas.' });
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -24,70 +39,42 @@ vendasRoute.get('/:id', (req, res) => {
     try {
         const id = parseInt(req.params.id);
         if (isNaN(id)) {
-            return res.status(400).json({ message: 'ID inválido. Deve ser um número.' });
+            return res.status(400).json({ message: MESSAGES.ID_INVALIDO_DEVE_SER_NUMERO });
         }
 
         const venda = buscarVendaPorId(id);
         if (venda) {
             res.status(200).json(venda);
         } else {
-            res.status(404).json({ message: `Venda com ID ${id} não encontrada.` });
+            res.status(404).json({ message: MESSAGES.VENDA_NAO_ENCONTRADA });
         }
     } catch (error) {
-        console.error(`Erro ao buscar venda por ID ${req.params.id}:`, error);
-        res.status(500).json({ message: 'Erro interno do servidor ao buscar venda.' });
-    }
-});
-
-vendasRoute.get('/cliente/:clienteId', (req, res) => {
-    try {
-        const clienteId = parseInt(req.params.clienteId);
-        if (isNaN(clienteId)) {
-            return res.status(400).json({ message: 'ID do cliente inválido. Deve ser um número.' });
-        }
-
-        const vendas = buscarVendasPorClienteId(clienteId);
-        res.status(200).json(vendas);
-    } catch (error) {
-        console.error(`Erro ao buscar vendas por Cliente ID ${req.params.clienteId}:`, error);
-        res.status(500).json({ message: 'Erro interno do servidor ao buscar vendas por cliente.' });
+        res.status(500).json({ message: error.message });
     }
 });
 
 vendasRoute.post('/', (req, res) => {
     try {
-        const { cliente_id, produto_id, quantidade, preco_unit } = req.body;
+        const { cliente_id, produto_id, quantidade } = req.body;
 
-        if (!cliente_id || !produto_id || quantidade === undefined || preco_unit === undefined) {
-            return res.status(400).json({ message: 'Cliente ID, Produto ID, Quantidade e Preço Unitário são obrigatórios.' });
+        if (!cliente_id || !produto_id || quantidade === undefined) {
+            return res.status(400).json({ message: MESSAGES.CLIENTE_ID_PRODUTO_ID_QUANTIDADE_SAO_OBRIGATORIOS });
         }
         if (typeof cliente_id !== 'number' || cliente_id <= 0 || !Number.isInteger(cliente_id)) {
-            return res.status(400).json({ message: 'Cliente ID deve ser um número inteiro positivo.' });
+            return res.status(400).json({ message: MESSAGES.CLIENTE_ID_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO });
         }
         if (typeof produto_id !== 'number' || produto_id <= 0 || !Number.isInteger(produto_id)) {
-            return res.status(400).json({ message: 'Produto ID deve ser um número inteiro positivo.' });
+            return res.status(400).json({ message: MESSAGES.PRODUTO_ID_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO });
         }
         if (typeof quantidade !== 'number' || quantidade <= 0 || !Number.isInteger(quantidade)) {
-            return res.status(400).json({ message: 'Quantidade deve ser um número inteiro positivo.' });
-        }
-        if (typeof preco_unit !== 'number' || preco_unit <= 0) {
-            return res.status(400).json({ message: 'Preço unitário deve ser um número maior que zero.' });
+            return res.status(400).json({ message: MESSAGES.QUANTIDADE_DEVE_SER_UM_NUMERO_INTEIRO_POSITIVO });
         }
 
-        const newId = inserirVenda(cliente_id, produto_id, quantidade, preco_unit);
-        res.status(201).json({ id: newId, cliente_id, produto_id, quantidade, preco_unit });
+        const newId = inserirVenda(cliente_id, produto_id, quantidade);
+        res.status(201).json({ id: newId, cliente_id, produto_id, quantidade });
 
     } catch (error) {
-        console.error('Erro ao criar venda:', error.message);
-
-        if (error.message.includes('Estoque insuficiente')) {
-            return res.status(400).json({ message: error.message });
-        }
-        if (error.message.includes('Produto com ID') && error.message.includes('não encontrado')) {
-            return res.status(404).json({ message: error.message });
-        }
-
-        res.status(500).json({ message: 'Erro interno do servidor ao criar venda.' });
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -95,18 +82,17 @@ vendasRoute.delete('/:id', (req, res) => {
     try {
         const id = parseInt(req.params.id);
         if (isNaN(id)) {
-            return res.status(400).json({ message: 'ID inválido. Deve ser um número.' });
+            return res.status(400).json({ message: MESSAGES.ID_INVALIDO_DEVE_SER_NUMERO });
         }
 
         const deleted = deletarVenda(id);
         if (deleted) {
             res.status(204).send();
         } else {
-            res.status(404).json({ message: `Venda com ID ${id} não encontrada.` });
+            res.status(404).json({ message: MESSAGES.VENDA_NAO_ENCONTRADA });
         }
     } catch (error) {
-        console.error(`Erro ao deletar venda ID ${req.params.id}:`, error);
-        res.status(500).json({ message: 'Erro interno do servidor ao deletar venda.' });
+        res.status(500).json({ message: error.message });
     }
 });
 

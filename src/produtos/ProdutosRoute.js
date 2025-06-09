@@ -13,6 +13,19 @@ import MESSAGES from '../consts.js';
 
 const produtosRoute = express.Router();
 
+produtosRoute.get('/buscar', (req, res) => {
+    try {
+        const nome = req.query.nome;
+        if (!nome) {
+            return res.status(400).json({ message: MESSAGES.PARAMETRO_NOME_E_OBRIGATORIO_PARA_A_BUSCA });
+        }
+        const produtos = buscarProdutoPorNome(nome);
+        res.status(200).json(produtos);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 produtosRoute.get('/', (req, res) => {
     try {
         const produtos = buscarTodosProdutos();
@@ -35,19 +48,6 @@ produtosRoute.get('/:id', (req, res) => {
         } else {
             res.status(404).json({ message: MESSAGES.PRODUTO_NAO_ENCONTRADO });
         }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-produtosRoute.get('/buscar', (req, res) => {
-    try {
-        const nome = req.query.nome;
-        if (!nome) {
-            return res.status(400).json({ message: MESSAGES.PARAMETRO_NOME_E_OBRIGATORIO_PARA_A_BUSCA });
-        }
-        const produtos = buscarProdutoPorNome(nome);
-        res.status(200).json(produtos);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
