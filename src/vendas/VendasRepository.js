@@ -5,6 +5,7 @@ import {
     queryBuscarTodasVendas,
     queryBuscarVendaPorId,
     queryBuscarVendasPorClienteId,
+    queryTotalVendasProduto,
     queryDeletarVenda
 } from './VendasQuery.js';
 
@@ -73,6 +74,20 @@ export function buscarVendasPorClienteId(clienteId) {
         return vendas;
     } catch (error) {
         throw new Error(MESSAGES.FALHA_AO_BUSCAR_VENDAS_POR_CLIENTE_ID);
+    }
+}
+
+export function buscarTotalDeVendasPorProduto(produtoId) {
+    try {
+        const sumario = database.prepare(queryTotalVendasProduto).get(produtoId);
+
+        return {
+            quantidade_total_vendida: sumario.quantidade_total_vendida || 0,
+            valor_total_vendas: sumario.valor_total_vendas || 0
+        };
+    } catch (error) {
+        console.log(error)
+        throw new Error(MESSAGES.FALHA_AO_BUSCAR_TOTAL_DE_VENDAS_POR_PRODUTO);
     }
 }
 

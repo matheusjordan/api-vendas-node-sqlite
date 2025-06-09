@@ -59,7 +59,7 @@ As principais dependências do projeto são:
 
 A pasta `tests/` contém scripts utilitários para popular e limpar o banco de dados, facilitando o desenvolvimento e os testes. Para executá-los, use o `node` e a flag `--experimental-sqlite` na pasta raiz do projeto.
 
-**Importante**: Para os scripts de criação de dados (`criar*`), a API (`src/index.js`) **deve estar rodando**. Para o script de reset (`resetarBanco.js`), a API **não deve estar rodando**.
+**Importante**: Para os scripts de criação de dados a API (`src/index.js`) **deve estar rodando**. Para o script de reset (`resetarBanco.js`), a API **não deve estar rodando**.
 
 * **`tests/criarClientes.js`**: Cria um conjunto de clientes de teste no banco de dados.
     ```bash

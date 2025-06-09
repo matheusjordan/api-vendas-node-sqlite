@@ -58,6 +58,15 @@ JOIN Produtos AS P ON V.produto_id = P.id
 WHERE V.cliente_id = ?;
 `;
 
+export const queryTotalVendasProduto = `
+SELECT
+    SUM(V.quantidade) AS quantidade_total_vendida,
+    SUM(V.quantidade * P.preco) AS valor_total_vendas
+FROM Venda AS V
+JOIN Produtos AS P ON V.produto_id = P.id
+WHERE V.produto_id = ?;
+`;
+
 export const queryDeletarVenda = `
 DELETE FROM Venda WHERE id = ?;
 `;

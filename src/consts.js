@@ -40,6 +40,7 @@ const MESSAGES = {
     FALHA_AO_BUSCAR_VENDAS: 'Falha ao buscar vendas.',
     FALHA_AO_BUSCAR_VENDA_POR_ID: 'Falha ao buscar a venda por ID.',
     FALHA_AO_BUSCAR_VENDAS_POR_CLIENTE_ID: 'Falha ao buscar vendas por Cliente ID.',
+    FALHA_AO_BUSCAR_TOTAL_DE_VENDAS_POR_PRODUTO: 'Falha ao buscar vendas totais do produto'
 }
 
 export default MESSAGES;

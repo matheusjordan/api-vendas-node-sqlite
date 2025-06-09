@@ -5,6 +5,7 @@ import {
     buscarTodasVendas,
     buscarVendaPorId,
     buscarVendasPorClienteId,
+    buscarTotalDeVendasPorProduto,
     deletarVenda
 } from './VendasRepository.js';
 
@@ -21,6 +22,20 @@ vendasRoute.get('/cliente/:clienteId', (req, res) => {
 
         const vendas = buscarVendasPorClienteId(clienteId);
         res.status(200).json(vendas);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+vendasRoute.get('/produto/:produtoId', (req, res) => {
+    try {
+        const produtoId = parseInt(req.params.produtoId);
+        if (isNaN(produtoId)) {
+            return res.status(400).json({ message: MESSAGES.ID_INVALIDO_DEVE_SER_NUMERO });
+        }
+
+        const total = buscarTotalDeVendasPorProduto(produtoId);
+        res.status(200).json(total);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

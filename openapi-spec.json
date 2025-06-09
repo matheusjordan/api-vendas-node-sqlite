@@ -45,7 +45,14 @@
             }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -84,10 +91,26 @@
             }
           },
           "400": {
-            "description": "Nome do cliente é obrigatório ou inválido."
+            "description": "Nome do cliente é obrigatório ou inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "O nome do cliente é obrigatório." }
+              }
+            }
           },
           "500": {
-            "description": "Falha ao inserir o cliente."
+            "description": "Falha ao inserir o cliente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Falha ao inserir o cliente." }
+              }
+            }
           }
         }
       }
@@ -119,13 +142,36 @@
             }
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Cliente não encontrado."
+            "description": "Cliente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Cliente não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -169,19 +215,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Cliente"
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Cliente atualizado com sucesso." }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "ID inválido ou nome obrigatório."
+            "description": "ID inválido ou nome obrigatório.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "id_invalido": { "value": { "message": "ID inválido. Deve ser um número." } },
+                  "nome_obrigatorio": { "value": { "message": "O nome do cliente é obrigatório." } }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Cliente não encontrado."
+            "description": "Cliente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Cliente não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -204,13 +279,36 @@
             "description": "Cliente deletado com sucesso (No Content)."
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Cliente não encontrado."
+            "description": "Cliente não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Cliente não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -245,10 +343,25 @@
             }
           },
           "400": {
-            "description": "Parâmetro \"nome\" é obrigatório."
+            "description": "Parâmetro \"nome\" é obrigatório.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Parâmetro \"nome\" é obrigatório para a busca." }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -272,7 +385,14 @@
             }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -322,10 +442,31 @@
             }
           },
           "400": {
-            "description": "Dados do produto inválidos ou ausentes."
+            "description": "Dados do produto inválidos ou ausentes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "campos_obrigatorios": { "value": { "message": "Nome, preço e estoque são obrigatórios." } },
+                  "nome_invalido": { "value": { "message": "Nome deve ser uma string não vazia." } },
+                  "preco_invalido": { "value": { "message": "Preço deve ser um número maior que zero." } },
+                  "estoque_invalido": { "value": { "message": "Estoque deve ser um número inteiro não negativo." } }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Falha ao inserir o produto."
+            "description": "Falha ao inserir o produto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Falha ao inserir o produto." }
+              }
+            }
           }
         }
       }
@@ -357,13 +498,36 @@
             }
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Produto não encontrado."
+            "description": "Produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Produto não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -418,19 +582,51 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Produto"
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Produto atualizado com sucesso." }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "ID inválido ou dados do produto ausentes/inválidos."
+            "description": "ID inválido ou dados do produto ausentes/inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "id_invalido": { "value": { "message": "ID inválido. Deve ser um número." } },
+                  "campos_obrigatorios": { "value": { "message": "Nome, preço e estoque são obrigatórios." } },
+                  "nome_invalido": { "value": { "message": "Nome deve ser uma string não vazia." } },
+                  "preco_invalido": { "value": { "message": "Preço deve ser um número maior que zero." } },
+                  "estoque_invalido": { "value": { "message": "Estoque deve ser um número inteiro não negativo." } }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Produto não encontrado."
+            "description": "Produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Produto não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -453,13 +649,36 @@
             "description": "Produto deletado com sucesso (No Content)."
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Produto não encontrado."
+            "description": "Produto não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Produto não encontrado" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -494,10 +713,25 @@
             }
           },
           "400": {
-            "description": "Parâmetro \"nome\" é obrigatório."
+            "description": "Parâmetro \"nome\" é obrigatório.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Parâmetro \"nome\" é obrigatório para a busca." }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -521,7 +755,14 @@
             }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -546,19 +787,13 @@
                   "quantidade": {
                     "type": "integer",
                     "description": "Quantidade do produto vendido."
-                  },
-                  "preco_unit": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "Preço unitário do produto no momento da venda."
                   }
                 },
-                "required": ["cliente_id", "produto_id", "quantidade", "preco_unit"],
+                "required": ["cliente_id", "produto_id", "quantidade"],
                 "example": {
                   "cliente_id": 1,
                   "produto_id": 101,
-                  "quantidade": 2,
-                  "preco_unit": 25.50
+                  "quantidade": 2
                 }
               }
             }
@@ -583,10 +818,16 @@
                         "type": "object",
                         "properties": {
                             "message": {
-                                "type": "string",
-                                "example": "Estoque insuficiente para o produto \"NomeProduto\". Disponível: 10, Solicitado: 15."
+                                "type": "string"
                             }
                         }
+                    },
+                    "examples": {
+                      "dados_obrigatorios": { "value": { "message": "Cliente ID, Produto ID, Quantidade são obrigatórios." } },
+                      "id_cliente_invalido": { "value": { "message": "Cliente ID deve ser um número inteiro positivo." } },
+                      "id_produto_invalido": { "value": { "message": "Produto ID deve ser um número inteiro positivo." } },
+                      "quantidade_invalida": { "value": { "message": "Quantidade deve ser um número inteiro positivo." } },
+                      "estoque_insuficiente": { "value": { "message": "Estoque insuficiente para o produto \"NomeProduto\". Disponível: 10, Solicitado: 15." } }
                     }
                 }
             }
@@ -599,16 +840,27 @@
                         "type": "object",
                         "properties": {
                             "message": {
-                                "type": "string",
-                                "example": "Produto com ID 101 não encontrado."
+                                "type": "string"
                             }
                         }
+                    },
+                    "examples": {
+                      "produto_nao_encontrado": { "value": { "message": "Produto com ID 101 não encontrado." } },
+                      "cliente_nao_encontrado": { "value": { "message": "Cliente com ID 1 não encontrado." } }
                     }
                 }
             }
           },
           "500": {
-            "description": "Falha interna do servidor ao processar a venda."
+            "description": "Falha interna do servidor ao processar a venda.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Falha ao inserir a venda." }
+              }
+            }
           }
         }
       }
@@ -640,13 +892,36 @@
             }
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Venda não encontrada."
+            "description": "Venda não encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Venda não encontrada" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       },
@@ -669,13 +944,36 @@
             "description": "Venda deletada com sucesso (No Content)."
           },
           "400": {
-            "description": "ID inválido."
+            "description": "ID inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "404": {
-            "description": "Venda não encontrada."
+            "description": "Venda não encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "Venda não encontrada" }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -710,10 +1008,86 @@
             }
           },
           "400": {
-            "description": "ID do cliente inválido."
+            "description": "ID do cliente inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor."
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vendas/produto/{produtoId}": {
+      "get": {
+        "summary": "Lista a quantidade e valor total de vendas de um produto",
+        "tags": ["Vendas"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "produtoId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "ID do produto para buscar seu sumário de vendas."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sumário de vendas do produto recuperado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "quantidade_total_vendida": {
+                      "type": "integer",
+                      "example": 15
+                    },
+                    "valor_total_vendas": {
+                      "type": "number",
+                      "format": "float",
+                      "example": 750.50
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID do produto inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "example": { "message": "ID inválido. Deve ser um número." }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
           }
         }
       }
@@ -795,7 +1169,17 @@
             "description": "Data e hora da venda (formato ISO 8601)."
           }
         },
-        "required": ["cliente_id", "produto_id", "quantidade", "preco_unit"]
+        "required": ["cliente_id", "produto_id", "quantidade"]
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Mensagem de erro."
+          }
+        },
+        "required": ["message"]
       }
     }
   }
