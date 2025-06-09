@@ -22,7 +22,7 @@ app.use('/vendas', vendasRoute);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
 app.get('/', (req, res) => {
-    res.send('API de Vendas para a disciplina de W.W.W!\n\nProfessor, por favor acesse /api-docs para a documentação.');
+    res.send('API de Vendas para a disciplina de W.W.W!\n\nProfessor, por favor acesse /docs para a documentação.');
 });
 
 app.listen(3000, () => {

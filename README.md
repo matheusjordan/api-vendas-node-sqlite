@@ -1,8 +1,10 @@
----
+
 
 # 🚀 API de Vendas para Substitutiva de W.W.W
 
 Este projeto é uma API básica para gerenciamento de clientes, produtos e vendas. Desenvolvida com **Node.js** e **Express**, utiliza o módulo nativo experimental **`node:sqlite`** para o banco de dados. A API é modular, com funcionalidades organizadas por entidade, e possui **documentação interativa via Swagger UI**.
+
+### * Obrigatório NodeJS 24.16
 
 ---
 
@@ -41,7 +43,7 @@ As principais dependências do projeto são:
 | `nodemon`          | `^3.1.10` | Utilitário para **desenvolvimento** (reinicia o server a cada alteração).|
 | `swagger-ui-express`| `^5.0.1`  | Serve a **interface do Swagger UI**.                                    |
 
-**Nota**: O banco de dados **`node:sqlite`** é um módulo nativo experimental do Node.js (v24.1.0+), **não exigindo instalação via `npm`**.
+**Nota**: O banco de dados **`node:sqlite`** é um módulo nativo experimental do Node.js (v24.16+), **não exigindo instalação via `npm`**.
 
 ---
 

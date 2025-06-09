@@ -8,17 +8,15 @@ import {
     queryAtualizarCliente,
     queryDeletarCliente
 } from './ClientesQuery.js';
-
+import MESSAGES from '../consts.js';
 
 function inserirCliente(nome) {
     try {
         const stmt = database.prepare(queryInserirCliente);
         const result = stmt.run(nome);
-        console.log(`Cliente "${nome}" inserido com ID: ${result.lastInsertRowid}`);
         return result.lastInsertRowid;
     } catch (error) {
-        console.error(`Erro ao inserir cliente "${nome}":`, error.message);
-        return null;
+        throw new Error(MESSAGES.CLIENTE_JA_EXISTE);
     }
 }
 
@@ -27,8 +25,7 @@ function buscarTodosClientes() {
         const clientes = database.prepare(queryBuscarTodosClientes).all();
         return clientes;
     } catch (error) {
-        console.error('Erro ao buscar todos os clientes:', error.message);
-        return [];
+        throw new Error(MESSAGES.FALHA_AO_LISTAR_CLIENTES);
     }
 }
 
@@ -37,8 +34,7 @@ function buscarClientePorId(id) {
         const cliente = database.prepare(queryBuscarClientePorId).get(id);
         return cliente;
     } catch (error) {
-        console.error(`Erro ao buscar cliente por ID ${id}:`, error.message);
-        return null;
+        throw new Error(MESSAGES.CLIENTE_NAO_ENCONTRADO);
     }
 }
 
@@ -47,8 +43,7 @@ function buscarClientePorNome(nome) {
         const clientes = database.prepare(queryBuscarClientePorNome).all(`%${nome}%`);
         return clientes;
     } catch (error) {
-        console.error(`Erro ao buscar clientes por nome "${nome}":`, error.message);
-        return [];
+        throw new Error(MESSAGES.CLIENTE_NAO_ENCONTRADO);
     }
 }
 
@@ -57,15 +52,12 @@ function atualizarCliente(id, novoNome) {
         const stmt = database.prepare(queryAtualizarCliente);
         const result = stmt.run(novoNome, id);
         if (result.changes > 0) {
-            console.log(`Cliente ID ${id} atualizado para "${novoNome}".`);
             return true;
         } else {
-            console.log(`Nenhum cliente encontrado com ID ${id} para atualizar.`);
             return false;
         }
     } catch (error) {
-        console.error(`Erro ao atualizar cliente ID ${id}:`, error.message);
-        return false;
+        throw new Error(MESSAGES.FALHA_AO_ATUALIZAR_CLIENTE);
     }
 }
 
@@ -74,15 +66,12 @@ function deletarCliente(id) {
         const stmt = database.prepare(queryDeletarCliente);
         const result = stmt.run(id);
         if (result.changes > 0) {
-            console.log(`Cliente ID ${id} deletado com sucesso.`);
             return true;
         } else {
-            console.log(`Nenhum cliente encontrado com ID ${id} para deletar.`);
             return false;
         }
     } catch (error) {
-        console.error(`Erro ao deletar cliente ID ${id}:`, error.message);
-        return false;
+        throw new Error(MESSAGES.FALHA_AO_DELETAR_CLIENTE);
     }
 }
 
